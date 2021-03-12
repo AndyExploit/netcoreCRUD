@@ -1,0 +1,68 @@
+﻿@model IEnumerable<CRUDprueba.Models.Libro> //se agrega modelo
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    @if (TempData["mensaje"] != null) //usar la tempdata de create httpPost
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["mensaje"]
+            <button type="button" class="close" date-dismiss="alert" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Lista de libros</h3>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-success d-block" asp-action="Create" asp-controller="Libros">Nuevo Libro</a>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <td>@Html.DisplayNameFor(m => m.Id)</td>
+                        <td>@Html.DisplayNameFor(m => m.Titulo)</td>
+                        <td>@Html.DisplayNameFor(m => m.Descripcion)</td>
+                        <td>@Html.DisplayNameFor(m => m.FechaLanzamiento)</td>
+                        <td>@Html.DisplayNameFor(m => m.Autor)</td>
+                        <td>@Html.DisplayNameFor(m => m.Precio)</td>
+                        <td>Acciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model) 
+                    {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Titulo</td>
+                        <td>@item.Descripcion</td>
+                        <td>@item.FechaLanzamiento</td>
+                        <td>@item.Autor</td>
+                        <td>@item.Precio</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Libros" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                            <a asp-controller="Libros" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No existen registros</p>
+        }
+    </div>
+</div>
+
